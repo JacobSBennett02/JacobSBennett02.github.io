@@ -9,7 +9,7 @@
     var box = jQuery('.box');	// reference to the HTML .box element
     var board = jQuery('.board');	// reference to the HTML .board element
     var boardWidth = board.width();	// the maximum X-Coordinate of the screen
-
+    var boardHeight = jQuery(window).height();
     // Every 50 milliseconds, call the update Function (see below)
     setInterval(update, 50);
     
@@ -17,8 +17,10 @@
     box.on('click', handleBoxClick);
 
     // moves the Box to a new position on the screen along the X-Axis
-    function moveBoxTo(newPositionX) {
+    function moveBoxTo(newPositionX, newPositionY) {
         box.css("left", newPositionX);
+        box.css('top', newPositionY);
+        
     }
 
     // changes the text displayed on the Box
@@ -31,9 +33,13 @@
     //////////////////////////////////////////////////////////////////
     
     // TODO 2 - Variable declarations 
+    var randNumX = Math.random(0, boardWidth) * 100;
+    var randNumY = Math.random(0, boardHeight) * 100 ;
     var positionX = 0;
     var points = 0;
     var speed = 10;
+    var positionY = 0;
+    var speedY = 10;
     /* 
     This Function will be called 20 times/second. Each time it is called,
     it should move the Box to a new location. If the box drifts off the screen
@@ -42,15 +48,20 @@
     
     function update() {
         positionX = positionX + speed;
-        moveBoxTo(positionX);
-        
+        positionY = positionY + speedY;
+        moveBoxTo(positionX, positionY);
         if(positionX > boardWidth){
             speed = -speed;
         }
         if(positionX < 0){
             speed = -speed;
         }
-        
+        if(positionY > boardHeight){
+            speedY = -speedY;
+        }
+        if(positionY < 0){
+            speedY = -speedY;
+        }
     };
 
     /* 
@@ -59,10 +70,12 @@
     the left side of the screen.
     */
     function handleBoxClick() {
-        positionX = 0;
+        positionX = randNumX;
+        positionY = randNumY;
         points++;
         changeBoxText(points);
-        speed = speed + 3;
-        
+        speed = speed * 1.15;
+        speedY = speedY * 1.15;
     };
 })();
+
