@@ -1,0 +1,150 @@
+var level01 = function (window) {
+
+    window.opspark = window.opspark || {};
+
+    var draw = window.opspark.draw;
+    var createjs = window.createjs;
+
+    window.opspark.runLevelInGame = function(game) {
+        // some useful constants 
+        var groundY = game.groundY;
+
+        // this data will allow us to define all of the
+        // behavior of our game
+        var levelData = {
+            "name": "Robot Romp",
+            "number": 1, 
+            "speed": -3,
+            "gameItems": [
+                { "type": "sawblade", "x": 1400, "y": groundY },
+                { "type": "sawblade", "x": 600, "y": groundY - 110},
+                { "type": "sawblade", "x": 900, "y": groundY },
+                { "type": "wall", "x" :1800, "y": groundY - 10} 
+            ],
+            "enemy":[
+                { "type": "square", "x" :900, "y": groundY - 50},
+                { "type": "square", "x" :1050, "y": groundY - 115},
+                { "type": "square", "x" :1900, "y": groundY - 50}
+            ]
+        };
+        window.levelData = levelData;
+        // set this to true or false depending on if you want to see hitzones
+        game.setDebugMode(true);
+
+        // BEGIN EDITING YOUR CODE HERE
+        function createSawBlade(x,y){       // defines sawblades
+            var hitZoneSize = 25;
+            var damageFromObstacle = 20;
+            var sawBladeHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);
+            sawBladeHitZone.x = x;
+            sawBladeHitZone.y = y;
+            game.addGameItem(sawBladeHitZone);  
+            var obstacleImage = draw.bitmap('img/sawblade.png');
+            sawBladeHitZone.addChild(obstacleImage);
+            obstacleImage.x = -25;
+            obstacleImage.y = -25;
+            
+        }
+        createSawBlade(400,groundY - 110); 
+        createSawBlade(1200,groundY);
+        createSawBlade(1600,groundY - 110);
+        
+        for (var i = 0; i < levelData.gameItems.length; i++) {          // allows creation of sawblades
+            var eachElement = levelData.gameItems[i];
+            var GameItemSawblade = levelData.gameItems[i];
+            var sawbladeX = GameItemSawblade.x;
+            var sawbladeY = GameItemSawblade.y;
+            createSawBlade(sawbladeX, sawbladeY);
+            }
+        
+        function createWall(x,y) {              // defines walls
+            var hitZoneSize = 20;
+            var damageFromObstacle = 50;
+            var wallHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);
+            wallHitZone.x = x;
+            wallHitZone.y = y;
+            game.addGameItem(wallHitZone);  
+            var obstacleImage = draw.bitmap('img/wall.png');
+            wallHitZone.addChild(obstacleImage);
+            obstacleImage.x = -25;
+            obstacleImage.y = -25;
+        };
+            
+        
+        for (var i = 3; i < levelData.gameItems.length; i++) {      // allows creation of walls
+            var eachElement = levelData.gameItems[i];
+            var GameItemWall = levelData.gameItems[i];
+            var wallX = GameItemWall.x;
+            var wallY = GameItemWall.y;
+            createWall(wallX, wallY);
+        }
+        
+        function createEnemy(x,y){                                     // creates enemy
+            var enemy =  game.createGameItem('enemy',25);           
+            var redSquare = draw.rect(50,50,'red');
+            redSquare.x = -25;
+            redSquare.y = -25;
+            enemy.addChild(redSquare);
+            enemy.x = x;
+            enemy.y = y;
+            game.addGameItem(enemy);
+            enemy.velocityX = -2;           
+            enemy.rotationalVelocity = 10;
+            
+            enemy.onPlayerCollision = function() {
+                game.changeIntegrity(-50);
+                enemy.shrink();
+                
+            };
+    
+            enemy.onProjectileCollision = function(){
+                console.log("Halle has hit the enemy");
+                game.increaseScore(100);
+                enemy.fadeOut();
+                
+            };
+        }
+        //createEnemy(1900,groundY-50);
+       // createEnemy(1000,groundY-50);
+       // createEnemy(1300,groundY-115);
+
+        for (var i = 0; i < levelData.enemy.length; i++) {      // allows creation of enemies
+            var GameItemEnemy = levelData.enemy[i];
+            var enemyX = GameItemEnemy.x;
+            var enemyY = GameItemEnemy.y;
+            createEnemy(enemyX, enemyY);
+        }
+        
+        
+        function createReward(x,y){                                     // defines enemy
+            var reward =  game.createGameItem('reward',12.5);           
+            var greenSquare = draw.rect(25,25,'lightGreen');
+            greenSquare.x = -12.5;
+            greenSquare.y = -12.5;
+            reward.addChild(greenSquare);
+            reward.x = x;
+            reward.y = y;
+            game.addGameItem(reward);
+            reward.velocityX = -2;           
+            reward.rotationalVelocity = -10;
+            
+            reward.onPlayerCollision = function() {
+                game.changeIntegrity(50);
+                reward.fadeOut();
+                game.increaseScore(500);
+            };
+        }   
+        
+        createReward(200,groundY-50);
+        // DO NOT EDIT CODE BELOW HERE
+    
+    
+    };
+};
+
+// DON'T REMOVE THIS CODE //////////////////////////////////////////////////////
+if((typeof process !== 'undefined') &&
+    (typeof process.versions.node !== 'undefined')) {
+    // here, export any references you need for tests //
+    module.exports = level01;
+}
