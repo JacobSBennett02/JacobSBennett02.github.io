@@ -40,8 +40,13 @@ var level01 = function (window) {
                 { "type": "wall", "x" :3800, "y": groundY - 10}, 
                 { "type": "wall", "x" :4200, "y": groundY - 10},
                 { "type": "wall", "x" :4400, "y": groundY - 10}
+                ],
+            "speeder":[
+                { "type": "square", "x":3000, "y": groundY - 50},
+                { "type": "square", "x":8000, "y": groundY - 50},
+                { "type": "square", "x":12000, "y": groundY - 50}
                 ]
-        };
+        };  
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
         game.setDebugMode(true);
@@ -65,12 +70,14 @@ var level01 = function (window) {
         createSawBlade(1600,groundY - 110);
         
         for (var i = 0; i < levelData.gameItems.length; i++) {          // allows creation of sawblades
-            var eachElement = levelData.gameItems[i];
+            
             var GameItemSawblade = levelData.gameItems[i];
             var sawbladeX = GameItemSawblade.x;
             var sawbladeY = GameItemSawblade.y;
             createSawBlade(sawbladeX, sawbladeY);
-            }
+            
+            
+        }
         
         function createWall(x,y) {              // defines walls
             var hitZoneSize = 20;
@@ -171,6 +178,72 @@ var level01 = function (window) {
         }   
         
         createBonus(4120,groundY-130);
+        
+        function createSpeeder(x,y){                                     // defines speeder
+            var speeder =  game.createGameItem('speeder',20);           
+            var purpleSquare = draw.rect(40,40,'purple');
+            purpleSquare.x = -20;
+            purpleSquare.y = -20;
+            speeder.addChild(purpleSquare);
+            speeder.x = x;
+            speeder.y = y;
+            game.addGameItem(speeder);
+            speeder.velocityX = -6;           
+            speeder.rotationalVelocity = -10;
+            
+            speeder.onPlayerCollision = function() {
+                game.changeIntegrity(-40);
+                speeder.shrink();
+            };
+        
+            speeder.onProjectileCollision = function(){
+                console.log("Halle has hit the speeder");
+                game.increaseScore(300);
+                speeder.fadeOut();
+                
+            };
+        } 
+        
+         for (var i = 0; i < levelData.speeder.length; i++) {      // allows creation of speeders
+            var GameItemSpeeder = levelData.speeder[i];
+            var speederX = GameItemSpeeder.x;
+            var speederY = GameItemSpeeder.y;
+            createSpeeder(speederX, speederY);
+        }
+        
+         function createBoss(x,y){                                     // defines boss
+            var boss =  game.createGameItem('boss',75);           
+            var bossSquare = draw.rect(150,150,'darkRed');
+            bossSquare.x = -75;
+            bossSquare.y = -75;
+            boss.addChild(bossSquare);
+            boss.x = x;
+            boss.y = y;
+            game.addGameItem(boss);
+            boss.velocityX = -1;           
+            boss.rotationalVelocity = -3;
+            
+            boss.onPlayerCollision = function() {
+                game.changeIntegrity(-100);
+                boss.shrink();
+            };
+        
+            var count =0;
+            
+            boss.onProjectileCollision = function(){
+                console.log("Halle has hit the boss");
+                count = count +1;
+                createBoss(200, groundY - 50);
+                if(count>10){
+                    boss.fadeOut();
+                    game.increaseScore(7000);
+                }
+            };
+            
+            
+        }
+            createBoss(3500, groundY-50);
+        
         // DO NOT EDIT CODE BELOW HERE
     
     
