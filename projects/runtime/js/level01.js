@@ -44,12 +44,22 @@ var level01 = function (window) {
             "speeder":[
                 { "type": "square", "x":3000, "y": groundY - 50},
                 { "type": "square", "x":8000, "y": groundY - 50},
-                { "type": "square", "x":12000, "y": groundY - 50}
+                { "type": "square", "x":12000, "y": groundY - 50},
+                { "type": "square", "x":14400, "y": groundY - 50},
+                { "type": "square", "x":14500, "y": groundY - 50},
+                { "type": "square", "x":14600, "y": groundY - 50},
+                { "type": "square", "x":14700, "y": groundY},
+                { "type": "square", "x":14800, "y": groundY},
+                { "type": "square", "x":15100, "y": groundY - 50},
+                { "type": "square", "x":15200, "y": groundY - 50},
+                { "type": "square", "x":15300, "y": groundY - 50},
+                { "type": "square", "x":15400, "y": groundY - 100},
+                { "type": "square", "x":15500, "y": groundY - 100}
                 ]
         };  
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
-        game.setDebugMode(true);
+        game.setDebugMode(false);
 
         // BEGIN EDITING YOUR CODE HERE
         function createSawBlade(x,y){       // defines sawblades
@@ -228,21 +238,16 @@ var level01 = function (window) {
                 boss.shrink();
             };
         
-            var count =0;
             
             boss.onProjectileCollision = function(){
                 console.log("Halle has hit the boss");
-                count = count +1;
-                createBoss(200, groundY - 50);
-                if(count>10){
-                    boss.fadeOut();
-                    game.increaseScore(7000);
-                }
+                game.increaseScore(4000);
+                boss.fadeOut();
             };
             
             
         }
-            createBoss(3500, groundY-50);
+            createBoss(3800, groundY-50);
         
         // DO NOT EDIT CODE BELOW HERE
     
