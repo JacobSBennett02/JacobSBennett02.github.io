@@ -66,7 +66,7 @@ var level01 = function (window) {
         };  
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
-        game.setDebugMode(true);
+        game.setDebugMode(false);
 
         // BEGIN EDITING YOUR CODE HERE
         function createSawBlade(x,y){       // defines sawblades
