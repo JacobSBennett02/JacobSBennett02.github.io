@@ -54,12 +54,19 @@ var level01 = function (window) {
                 { "type": "square", "x":15200, "y": groundY - 50},
                 { "type": "square", "x":15300, "y": groundY - 50},
                 { "type": "square", "x":15400, "y": groundY - 100},
-                { "type": "square", "x":15500, "y": groundY - 100}
+                { "type": "square", "x":15500, "y": groundY - 100},
+                { "type": "square", "x":16300, "y": groundY},
+                { "type": "square", "x":16400, "y": groundY},
+                { "type": "square", "x":16700, "y": groundY - 100},
+                { "type": "square", "x":17400, "y": groundY},
+                { "type": "square", "x":17450, "y": groundY},
+                { "type": "square", "x":17500, "y": groundY}
                 ]
+            
         };  
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
-        game.setDebugMode(false);
+        game.setDebugMode(true);
 
         // BEGIN EDITING YOUR CODE HERE
         function createSawBlade(x,y){       // defines sawblades
@@ -168,7 +175,7 @@ var level01 = function (window) {
         }   
         
         createReward(2050,groundY-130);
-        
+        createReward(4550,groundY-130);
         function createBonus(x,y){                                     // defines bonus
             var reward =  game.createGameItem('reward',6.25);           
             var greenSquare = draw.rect(12.5,12.5,'yellow');
@@ -241,7 +248,7 @@ var level01 = function (window) {
             
             boss.onProjectileCollision = function(){
                 console.log("Halle has hit the boss");
-                game.increaseScore(4000);
+                game.increaseScore(4400);
                 boss.fadeOut();
             };
             
@@ -249,6 +256,43 @@ var level01 = function (window) {
         }
             createBoss(3800, groundY-50);
         
+        function createLazerWall(x,y){
+            var lazerWallUpper = game.createGameItem('lazerWall',25);
+            var lazerWallLower = game.createGameItem('lazerWall',25);
+            var lazerWallUpperSquare = draw.rect(50,-500, 'teal');
+            var lazerWallLowerSquare = draw.rect(50, 500, 'teal');
+            lazerWallUpperSquare.x = -25;
+            lazerWallUpperSquare.y = 25;
+            lazerWallLowerSquare.x = -25;
+            lazerWallLowerSquare.y = - 25;
+            lazerWallUpper.addChild(lazerWallUpperSquare);
+            lazerWallLower.addChild(lazerWallLowerSquare);
+            lazerWallUpper.x = x;
+            lazerWallUpper.y = y-200;
+            lazerWallLower.x = x;
+            lazerWallLower.y = y + 40;
+            game.addGameItem(lazerWallUpper);
+            game.addGameItem(lazerWallLower);
+            lazerWallUpper.velocityX = -6;
+            lazerWallLower.velocityX = -6;
+            
+            lazerWallUpper.onPlayerCollision = function() {
+                game.changeIntegrity(-80);
+            };
+            lazerWallLower.onPlayerCollision = function() {
+                game.changeIntegrity(-80);
+            };
+            
+        }
+        
+        createLazerWall(15800,groundY-50);
+        createLazerWall(14000,groundY);
+        createLazerWall(15950,groundY-50);
+        createLazerWall(16100,groundY);
+        createLazerWall(17100,groundY-50);
+        createLazerWall(17150,groundY-50);
+        createLazerWall(17800,groundY);
+        createLazerWall(17850,groundY);
         // DO NOT EDIT CODE BELOW HERE
     
     
