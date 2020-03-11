@@ -277,10 +277,10 @@ var level01 = function (window) {
             lazerWallLower.velocityX = -6;
             
             lazerWallUpper.onPlayerCollision = function() {
-                game.changeIntegrity(-80);
+                game.changeIntegrity(-25);
             };
             lazerWallLower.onPlayerCollision = function() {
-                game.changeIntegrity(-80);
+                game.changeIntegrity(-25);
             };
             
         }
@@ -293,6 +293,10 @@ var level01 = function (window) {
         createLazerWall(17150,groundY-50);
         createLazerWall(17800,groundY);
         createLazerWall(17850,groundY);
+        createLazerWall(18000,groundY-50);
+        createLazerWall(18100,groundY);
+        createLazerWall(18300,groundY-50);
+        createLazerWall(18450,groundY-50);
         // DO NOT EDIT CODE BELOW HERE
     
     
