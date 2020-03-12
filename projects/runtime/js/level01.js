@@ -248,7 +248,7 @@ var level01 = function (window) {
             
             boss.onProjectileCollision = function(){
                 console.log("Halle has hit the boss");
-                game.increaseScore(4400);
+                game.increaseScore(4700);
                 boss.fadeOut();
             };
             
