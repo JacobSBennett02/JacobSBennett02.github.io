@@ -1,0 +1,70 @@
+
+body {
+  background-color: darkgreen;
+}
+
+#board {
+  width: 440px;
+  height: 440px;
+  border: 1px solid white;
+  background-color: black;
+  position: relative;
+}
+
+#player1Paddle {
+  background-color: teal;
+  width: 20px;
+  height: 80px;
+  position: absolute;
+  left: 5px;
+}
+
+#player2Paddle {
+  background-color: red;
+  width: 20px;
+  height: 80px;
+  position: absolute;
+  left: 415px;
+}
+
+#ball {
+  background-color: yellow;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 205px;
+  top: 205px;
+  border-radius: 10px;
+}
+
+#player1Score{
+    border: 1px solid white;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 70px;
+    top: 5px;
+}
+
+#player2Score{
+    border: 1px solid white;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 320px;
+    top: 5px;
+}
+
+#player1Text{
+    color: white;
+    position: absolute;
+    left: 18px;
+    top: -14px;
+}
+
+#player2Text{
+    color: white;
+    position: absolute;
+    left: 18px;
+    top: -14px;
+}
